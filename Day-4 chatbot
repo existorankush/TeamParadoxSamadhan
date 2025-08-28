@@ -1,0 +1,22 @@
+import os
+import google.generativeai as genai
+
+# Get your Gemini API key (already set with setx)
+API_KEY = os.getenv("AIzaSyAhVDsk6LQvxW8KuWpq7xIBXOFAYGhg-aM")
+genai.configure(api_key=API_KEY)
+
+# Create a chat model
+model = genai.GenerativeModel("gemini-1.5-flash")
+
+print("🤖 Gemini Chatbot is ready! (type 'exit' to quit)")
+
+chat = model.start_chat()
+
+while True:
+    user_input = input("You: ")
+    if user_input.lower() in ["exit", "quit"]:
+        print("Chatbot: Goodbye! 👋")
+        break
+
+    response = chat.send_message(user_input)
+    print("Chatbot:", response.text)
