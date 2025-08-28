@@ -1,0 +1,20 @@
+# day3_gemini.py
+from utils import is_gemini_available, safe_generate, mock_response
+
+def main():
+    prompt = "Write a 5-line motivational quote for students preparing for exams."
+    if is_gemini_available():
+        ok, txt = safe_generate(prompt)
+        if ok:
+            print("AI Response:\n")
+            print(txt)
+        else:
+            print("Gemini call failed:", txt)
+            print("\nFalling back to mock:")
+            print(mock_response(prompt))
+    else:
+        print("GEMINI not available. Running mock response:")
+        print(mock_response(prompt))
+
+if __name__ == "__main__":
+    main()
