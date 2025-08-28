@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EduMentor AI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background: #f5f7fa;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    p {
+      color: #34495e;
+    }
+    .btn {
+      padding: 10px 20px;
+      background: #2ecc71;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #27ae60;
+    }
+  </style>
+</head>
+<body>
+  <h1>EduMentor AI</h1>
+  <p>Click the button to test backend connection</p>
+  <button class="btn" id="test-btn">Test Connection</button>
+
+  <!-- 🔹 Script added here -->
+  <script>
+    document.getElementById("test-btn").addEventListener("click", async () => {
+      try {
+        let response = await fetch("/api/test");
+        let data = await response.json();
+        alert(data.message);
+      } catch (error) {
+        alert("❌ Error connecting to backend");
+      }
+    });
+  </script>
+
+
+<h2>Ask EduMentor AI</h2>
+<input type="text" id="question" placeholder="Type your question here">
+<button class="btn" id="ask-btn">Ask</button>
+
+<script>
+  document.getElementById("test-btn").addEventListener("click", async () => {
+    try {
+      let response = await fetch("/api/test");
+      let data = await response.json();
+      alert(data.message);
+    } catch (error) {
+      alert("❌ Error connecting to backend");
+    }
+  });
+
+  document.getElementById("ask-btn").addEventListener("click", async () => {
+    let q = document.getElementById("question").value;
+    try {
+      let response = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: q })
+      });
+      let data = await response.json();
+      alert(data.answer);
+    } catch (error) {
+      alert("❌ Failed to get response from backend");
+    }
+  });
+</script>
+
+</body>
+</html>
