@@ -1,0 +1,90 @@
+import random
+
+# ----------------------------
+# Day 7 - Quiz Bot
+# ----------------------------
+
+def run_quiz():
+    # Quiz Questions
+    questions = [
+        {
+            "question": "Which language is known as the language of AI?",
+            "options": ["1. Python", "2. C++", "3. Java", "4. Ruby"],
+            "answer": "1"
+        },
+        {
+            "question": "What does HTML stand for?",
+            "options": ["1. HyperText Markup Language", "2. HighText Machine Language", "3. Hyper Transfer Markup Language", "4. None"],
+            "answer": "1"
+        },
+        {
+            "question": "Which data structure uses FIFO?",
+            "options": ["1. Stack", "2. Queue", "3. Linked List", "4. Tree"],
+            "answer": "2"
+        },
+        {
+            "question": "In Python, what is used to define a block of code?",
+            "options": ["1. Braces {}", "2. Indentation", "3. Parentheses ()", "4. None"],
+            "answer": "2"
+        },
+        {
+            "question": "Which of these is a NoSQL database?",
+            "options": ["1. MySQL", "2. MongoDB", "3. Oracle", "4. PostgreSQL"],
+            "answer": "2"
+        },
+        {
+            "question": "Which protocol is used to send emails?",
+            "options": ["1. HTTP", "2. FTP", "3. SMTP", "4. SNMP"],
+            "answer": "3"
+        },
+        {
+            "question": "Which of these is not an operating system?",
+            "options": ["1. Windows", "2. Linux", "3. Oracle", "4. macOS"],
+            "answer": "3"
+        },
+        {
+            "question": "Which company developed the C language?",
+            "options": ["1. Microsoft", "2. Bell Labs", "3. Sun Microsystems", "4. IBM"],
+            "answer": "2"
+        },
+        {
+            "question": "Which is the brain of the computer?",
+            "options": ["1. RAM", "2. Hard Drive", "3. CPU", "4. GPU"],
+            "answer": "3"
+        },
+        {
+            "question": "In Machine Learning, what does 'Supervised Learning' use?",
+            "options": ["1. Unlabeled Data", "2. Labeled Data", "3. Mixed Data", "4. None"],
+            "answer": "2"
+        }
+    ]
+
+    # Shuffle questions
+    random.shuffle(questions)
+
+    score = 0
+
+    print("\n📘 Welcome to Day 7 QuizBot!\n")
+    for i, q in enumerate(questions, start=1):
+        print(f"Q{i}: {q['question']}")
+        for option in q["options"]:
+            print(option)
+        answer = input("Your answer (1-4): ").strip()
+
+        if answer == q["answer"]:
+            print("✅ Correct!\n")
+            score += 1
+        else:
+            print(f"❌ Wrong! Correct answer is {q['answer']}\n")
+
+    # Final Score
+    print("🎯 Quiz Finished!")
+    print(f"Your Score: {score}/{len(questions)}")
+    percentage = (score / len(questions)) * 100
+    print(f"Percentage: {percentage:.2f}%")
+
+# ----------------------------
+# Check Function
+# ----------------------------
+if __name__ == "__main__":
+    run_quiz()
