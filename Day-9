@@ -1,0 +1,63 @@
+# day9_quizbot.py
+import random
+from utils import is_gemini_available, safe_generate, mock_response
+
+LOCAL_QUIZ = [
+    {"question": "What is the capital of France?", "answer": "Paris"},
+    {"question": "What is 5 + 7?", "answer": "12"},
+    {"question": "Who wrote 'Hamlet'?", "answer": "Shakespeare"},
+]
+
+memory = []
+MAX_MEMORY = 6
+
+def add_memory(user_q, bot_a):
+    memory.append({"q": user_q, "a": bot_a})
+    while len(memory) > MAX_MEMORY:
+        memory.pop(0)
+
+def run():
+    print("Commands: /chat /quiz /reset /exit")
+    mode = "chat"
+    while True:
+        text = input("You: ").strip()
+        if text.lower() == "/exit":
+            print("Bot: Bye")
+            break
+        if text.lower() == "/reset":
+            memory.clear()
+            mode = "chat"
+            print("Memory cleared.")
+            continue
+        if text.lower() == "/chat":
+            mode = "chat"
+            print("Switched to chat mode.")
+            continue
+        if text.lower() == "/quiz":
+            mode = "quiz"
+            q = random.choice(LOCAL_QUIZ)
+            print("Quiz:", q["question"])
+            a = input("You (answer): ").strip()
+            if a.lower() == q["answer"].lower():
+                print("Bot: ✅ Correct")
+            else:
+                print("Bot: ❌ Wrong. Correct:", q["answer"])
+            continue
+
+        if mode == "chat":
+            if is_gemini_available():
+                ok, txt = safe_generate(text)
+                if ok:
+                    print("Bot:", txt)
+                    add_memory(text, txt)
+                else:
+                    print("Bot (error):", txt)
+                    print("Bot (mock):", mock_response(text))
+                    add_memory(text, mock_response(text))
+            else:
+                resp = mock_response(text)
+                print("Bot (mock):", resp)
+                add_memory(text, resp)
+
+if __name__ == "__main__":
+    run()
